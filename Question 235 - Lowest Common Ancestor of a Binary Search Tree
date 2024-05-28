@@ -1,0 +1,62 @@
+public class Solution {
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null || p == null || q == null)
+                return null;
+
+            var rootToP = new List<TreeNode>();
+            var rootToQ = new List<TreeNode>();
+
+            var newList = new List<TreeNode>();
+
+            traversalPreorder(root, p, rootToP);
+            traversalPreorder(root, q, rootToQ);
+
+            if (rootToP.Count == 0 || rootToQ.Count == 0)
+            {
+                return null;
+            }
+
+            int index = 0;
+            TreeNode ancestor = null;
+            while (index < rootToP.Count && index < rootToQ.Count)
+            {
+                if (rootToP[index] == rootToQ[index])
+                {
+                    ancestor = rootToP[index];
+                }
+                else
+                    break;
+                //
+                index++;
+            }
+
+            return ancestor;
+        }
+
+        private static bool traversalPreorder(TreeNode root, TreeNode p, List<TreeNode> prefix)
+        {         
+            if(root == null)
+                return false;
+
+            prefix.Add(root);
+
+            if (root == p)
+            {
+                return true; 
+            }
+
+            var left  = traversalPreorder(root.left,  p, prefix);
+            var right = traversalPreorder(root.right, p, prefix);
+
+            if (left || right)
+            {
+                return true;
+            }
+			
+            // back track
+            prefix.RemoveAt(prefix.Count - 1);
+
+            return false;
+        }
+}

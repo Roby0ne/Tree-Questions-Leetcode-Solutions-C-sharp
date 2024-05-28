@@ -1,0 +1,21 @@
+public class Solution {
+    public IList<IList<int>> LevelOrder(TreeNode root) {
+        List<IList<int>> levelList = new List<IList<int>>();
+        
+        DFS(root, levelList, 0);
+        
+        return levelList;
+    }
+    
+    public void DFS(TreeNode root,  List<IList<int>> list, int level) {
+        if(root == null) return;
+        
+        if(list.Count == level) {
+            list.Add(new List<int>());
+        }
+        
+        list[level].Add(root.val);
+        DFS(root.left,list, level + 1);
+        DFS(root.right,list, level + 1);
+    }
+}

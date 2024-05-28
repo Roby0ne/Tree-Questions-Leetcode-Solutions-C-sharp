@@ -1,0 +1,24 @@
+public class Solution {
+    public TreeNode BuildTree(int[] inorder, int[] postorder) {
+        if (inorder == null || postorder == null || inorder.Length == 0 || postorder.Length == 0)
+        {
+          return null;  
+        }
+        Dictionary<int, int> map = new Dictionary<int, int>();
+        for (int i = 0; i < inorder.Length; i++)
+        {
+          map.Add(inorder[i], i);   
+        }
+        return helper(inorder, postorder, 0, inorder.Length - 1, 0, postorder.Length - 1, map);
+    }
+    private TreeNode helper(int[] inorder, int[] postorder, int inL, int inR, int postL, int postR, Dictionary<int, int>map)
+    {
+       if (inL > inR || postL > postR)
+           return null;
+       TreeNode root = new TreeNode(postorder[postR]);
+       int index = map[root.val];
+       root.left = helper(inorder, postorder, inL, index - 1, postL, postL + index - inL - 1, map);
+       root.right = helper(inorder, postorder, index + 1, inR, postR - (inR - index), postR - 1, map);
+       return root;
+    } 
+}

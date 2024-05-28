@@ -1,0 +1,34 @@
+public class Solution {
+    public IList<int> PostorderTraversal(TreeNode root) {
+        List<int> res = new List<int>();
+        if (root == null) return res;
+        
+        TreeNode tmp = null;
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        while (root != null || s.Count != 0)
+        {
+            while (root != null)
+            {
+              s.Push(root);
+              root = root.left;
+            }
+            if (s.Count != 0)
+            {
+              root = s.Pop();
+              if (root.right == null || root.right == tmp)
+              {
+                res.Add(root.val);
+                tmp = root;
+                root = null;
+              }
+              else
+              {
+                s.Push(root);
+                root = root.right;
+              }
+            }
+        }
+        
+        return res;
+    }
+}

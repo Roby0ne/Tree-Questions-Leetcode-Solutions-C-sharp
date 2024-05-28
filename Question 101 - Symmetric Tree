@@ -1,0 +1,21 @@
+public class Solution 
+{
+    public bool IsSymmetric(TreeNode root)
+    {
+        if(root == null)
+        {
+            return true;
+        }
+        TreeNode p=root.right;
+        TreeNode q=root.left;
+        return(SameTree(p, q)); 
+        
+    }
+    public bool SameTree(TreeNode p,TreeNode q)
+    {
+        if(p==null && q==null) return true;
+        if(p==null || q==null) return false;
+        return (p.val==q.val && SameTree(p.left,q.right) && SameTree(p.right,q.left));
+            
+    }
+}

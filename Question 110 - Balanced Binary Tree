@@ -1,0 +1,17 @@
+public class Solution {
+    public bool IsBalanced(TreeNode root) {
+        if(root==null)return true;
+        var left=helper(root.left);
+        var right=helper(root.right);
+        if(Math.Abs(left-right)>1)
+            return false;
+        return IsBalanced(root.left)&&IsBalanced(root.right);
+    }
+    int helper(TreeNode root)
+    {
+        if(root==null)return 0;
+        var left=helper(root.left);
+        var right=helper(root.right);
+        return left>right?left+1:right+1;
+    }
+}

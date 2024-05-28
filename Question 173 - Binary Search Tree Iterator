@@ -1,0 +1,28 @@
+  public class BSTIterator
+    {
+        Stack<TreeNode> nodes = new Stack<TreeNode>();
+        int index = 0;
+        TreeNode cur_node;
+        public BSTIterator(TreeNode root)
+        {
+            this.cur_node = root;
+        }
+
+        public int Next()
+        {
+            while(cur_node != null)
+            {
+                nodes.Push(cur_node);
+                cur_node = cur_node.left;
+            }
+            cur_node = nodes.Pop();
+            int retval = cur_node.val;
+            cur_node = cur_node.right;
+            return retval;
+        }
+
+        public bool HasNext()
+        {
+            return cur_node != null || nodes.Any();
+        }
+    }
